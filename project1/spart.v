@@ -61,14 +61,27 @@ module spart(
     transmit tx0(
         .clk(clk),
         .rst(rst),
-        .data(data),
+        .iocs(iocs),
+        .iorw(iorw),
         .enable(txenable),
+        .ioaddr(ioaddr),
+        .data(data),
+
+        .out(txd),
+        .tbr(tbr)
     );
 
     receive rx0(
+        .in(data),
         .clk(clk),
         .rst(rst),
+        .iocs(iocs),
+        .iorw(iorw),
         .enable(rxenable),
+        .ioaddr(ioaddr),
+
+        .rda(rda),
+        .data(rxBuffer)
     );
 
 endmodule
