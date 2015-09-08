@@ -1,21 +1,21 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:   
-// Design Name: 
-// Module Name:    spart 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
+// Company:
+// Engineer:
 //
-// Dependencies: 
+// Create Date:
+// Design Name:
+// Module Name:    spart
+// Project Name:
+// Target Devices:
+// Tool versions:
+// Description:
 //
-// Revision: 
+// Dependencies:
+//
+// Revision:
 // Revision 0.01 - File Created
-// Additional Comments: 
+// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 module spart(
@@ -31,5 +31,14 @@ module spart(
     input rxd
     );
 
+endmodule
+
+module baudRateGenerator(
+    input clk,
+    input databus,
+    input ioaddr,
+    output rxenable,
+    output txenable
+    );
 
 endmodule
