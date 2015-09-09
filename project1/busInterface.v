@@ -35,11 +35,11 @@ module busInterface(
                     internalDataBus = databus;
                 end
         end else begin
-            internalDataBus = 8'b0;
+            internalDataBus = 8'bz;
         end
     end
 
-    assign databus = (iocs & iorw) ? internalDataBus : 8'bz;
-    assign data = (iocs & ~iorw) ? internalDataBus : 8'bz;
+    assign databus = iorw ? internalDataBus : 8'bz;
+    assign data = internalDataBus;
 
 endmodule
