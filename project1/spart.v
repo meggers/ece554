@@ -85,18 +85,6 @@ module spart(
 
 endmodule
 
-module baudRateGenerator(
-    input clk,
-    input rst,
-    input [7:0] data,
-    input [1:0] ioaddr,
-
-    output rxenable,
-    output txenable
-    );
-
-endmodule
-
 module transmit(
     input clk,
     input rst,
