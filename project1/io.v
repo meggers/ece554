@@ -14,6 +14,7 @@ module transmit(
     reg [9:0] shiftReg; // two extra bits for start and stop
 
     always @(posedge clk) begin
+
         // reset
         if (rst) begin
             tbr <= 1'b1;
@@ -39,6 +40,10 @@ module transmit(
                 end else begin
                     tbr <= tbr;
                 end
+            end else begin
+                tbr <= tbr;
+                out <= out;
+                shiftReg <= shiftReg;
             end
 
         // idle
