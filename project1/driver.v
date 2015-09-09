@@ -65,14 +65,16 @@ module driver(
                     end
 
                     2'b01 : begin
-
+                        iorw = 1'b0;
                     end
 
                     2'b10 : begin
+                        iorw = 1'b0;
                         databus = divisor[7:0];
                     end
 
                     2'b11 : begin
+                        iorw = 1'b0;
                         databus = divisor[15:8];
                     end
                 endcase
