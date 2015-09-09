@@ -1,5 +1,4 @@
 module busInterface(
-    input rst,
     input rda,
     input tbr,
     input iocs,
@@ -35,6 +34,8 @@ module busInterface(
                 2'b11: begin
                     internalDataBus = databus;
                 end
+        end else begin
+            internalDataBus = 8'b0;
         end
     end
 

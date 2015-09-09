@@ -45,7 +45,6 @@ module spart(
     );
 
     busInterface bi0(
-        .rst(rst),
         .rda(rda),
         .tbr(tbr),
         .iocs(iocs),
