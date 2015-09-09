@@ -98,21 +98,6 @@ module baudRateGenerator(
 
 endmodule
 
-module busInterface(
-    input rst,
-    input rda,
-    input tbr,
-    input iocs,
-    input iorw,
-    input [7:0] rxBuffer,
-    input [1:0] ioaddr,
-    inout [7:0] databus,
-
-    output [7:0] data
-    );
-
-endmodule
-
 module transmit(
     input clk,
     input rst,
