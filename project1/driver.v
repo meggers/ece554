@@ -38,8 +38,8 @@ module driver(
     localparam divisor3 = 16'd162;
 
 	 reg dataAvailableToRead, dataAvailableToWrite;
-    reg [1:0] currentState;
-    reg [1:0] nextState;
+   reg [1:0] currentState;
+   reg [1:0] nextState;
 	 reg [7:0] internalData;
 	 reg [7:0] statusRegister;
 
@@ -58,7 +58,7 @@ module driver(
 
 				 	 dataAvailableToRead <= 1'b0;
 					 dataAvailableToWrite <= 1'b0;
-					 
+
 					 internalData <= 8'b0;
 					 statusReg <= 8'b0;
 
@@ -71,42 +71,42 @@ module driver(
                 ioaddr <= currentState;
                 case (currentState)
                     2'b00 : begin
-						  
+
 								// if data was read last cycle it is now available
 								if (dataAvailableToRead) begin
 									iorw <= 1'b1;
 									dataAvailableToRead <= 1'b0;
 									dataAvailableToWrite <= 1'b1;
-									
+
 									internalData <= databus;
-								
+
 								// if read data is available
 								end else if (rda) begin
 									iorw <= iorw;
 									dataAvailableToRead <= 1'b1;
 									dataAvailableToWrite <= dataAvailableToWrite;
-									
+
 									internalData <= internalData;
-									
+
 								// if write data is available
 								end else if (tda & dataAvailableToWrite) begin
 									iorw <= 1'b0;
 									dataAvailableToRead <= dataAvailableToRead;
 									dataAvailableToWrite <= 1'b0;
-									
+
 									internalData <= internalData;
-								
+
 								// idle? idk
 								end else begin
 									iorw <= iorw;
 									dataAvailableToRead <= dataAvailableToRead;
 									dataAvailableToWrite <= dataAvailableToWrite;
-									
+
 									internalData <= internalData;
 								end
-								
+
 								statusReg <= statusReg;
-								
+
 								nextState <= 2'b00;
                     end
 
@@ -114,10 +114,10 @@ module driver(
                         iorw <= 1'b1;
 								dataAvailableToRead <= dataAvailableToRead;
 								dataAvailableToWrite <= dataAvailableToWrite;
-								
+
 								statusReg <= databus;
 								internalData <= internalData;
-								
+
 								nextState <= 2'b00;
                     end
 
@@ -125,10 +125,10 @@ module driver(
                         iorw = 1'b0;
 								dataAvailableToRead <= dataAvailableToRead;
 								dataAvailableToWrite <= dataAvailableToWrite;
-								
+
 								statusReg <= statusReg;
                         internalData <= divisor[7:0];
-								
+
 								nextState <= 2'b11;
                     end
 
@@ -136,10 +136,10 @@ module driver(
                         iorw = 1'b0;
 								dataAvailableToRead <= dataAvailableToRead;
 								dataAvailableToWrite <= dataAvailableToWrite;
-								
+
 								statusReg <= statusReg;
                         internalData <= divisor[15:8];
-								
+
 								nextState <= 2'b11;
                     end
                 endcase
