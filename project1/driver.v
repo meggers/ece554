@@ -140,7 +140,7 @@ module driver(
 								statusRegister <= statusRegister;
                         internalData <= divisor[15:8];
 
-								nextState <= 2'b11;
+								nextState <= 2'b00;
                     end
                 endcase
 

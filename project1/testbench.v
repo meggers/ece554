@@ -1,20 +1,17 @@
-module cpu_tb();
+module testbench();
 
-wire [15:0] pc;
-wire hlt;
+wire [1:0] cfg;
+wire recieveData;
+wire transmitData;
 reg clk, rst_n;
 
-top_level uuu(
+top_level uut(
   .clk(clk),
   .rst(rst_n),
   .txd(transmitData),
   .rxd(recieveData),
-  .br_cfg(cfg));
-
-wire cfg;
-wire recieveData;
-wire transmitData;
-
+  .br_cfg(cfg)
+);
 
 always #5 clk = ~clk;
 assign cfg = 2'b00;
@@ -28,7 +25,7 @@ end
 
 initial begin
   $dumpfile("test.vcd");
-  $dumpvars(0, cpu_tb);
+  $dumpvars(0, uut);
 end
 
 initial begin
