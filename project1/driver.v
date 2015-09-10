@@ -123,7 +123,7 @@ module driver(
                     end
 
                     2'b10 : begin
-                        iorw = 1'b0;
+                        iorw <= 1'b0;
 						dataAvailableToRead <= dataAvailableToRead;
 						dataAvailableToWrite <= dataAvailableToWrite;
 
@@ -134,7 +134,7 @@ module driver(
                     end
 
                     2'b11 : begin
-                        iorw = 1'b0;
+                        iorw <= 1'b0;
 						dataAvailableToRead <= dataAvailableToRead;
 						dataAvailableToWrite <= dataAvailableToWrite;
 
