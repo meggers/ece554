@@ -37,11 +37,11 @@ module driver(
     localparam divisor2 = 16'd325;
     localparam divisor3 = 16'd162;
 
-	 reg dataAvailableToRead, dataAvailableToWrite;
-   reg [1:0] currentState;
-   reg [1:0] nextState;
-	 reg [7:0] internalData;
-	 reg [7:0] statusRegister;
+    reg dataAvailableToRead, dataAvailableToWrite;
+    reg [1:0] currentState;
+    reg [1:0] nextState;
+    reg [7:0] internalData;
+    reg [7:0] statusRegister;
 
     wire [15:0] divisor;
     assign divisor = br_cfg == 2'b00 ? divisor0 :
@@ -60,7 +60,7 @@ module driver(
 					 dataAvailableToWrite <= 1'b0;
 
 					 internalData <= 8'b0;
-					 statusReg <= 8'b0;
+					 statusRegister <= 8'b0;
 
                 iocs <= 1'b0;
                 iorw <= 1'b0;
@@ -89,7 +89,7 @@ module driver(
 									internalData <= internalData;
 
 								// if write data is available
-								end else if (tda & dataAvailableToWrite) begin
+								end else if (tbr & dataAvailableToWrite) begin
 									iorw <= 1'b0;
 									dataAvailableToRead <= dataAvailableToRead;
 									dataAvailableToWrite <= 1'b0;
@@ -105,7 +105,7 @@ module driver(
 									internalData <= internalData;
 								end
 
-								statusReg <= statusReg;
+								statusRegister <= statusRegister;
 
 								nextState <= 2'b00;
                     end
@@ -115,7 +115,7 @@ module driver(
 								dataAvailableToRead <= dataAvailableToRead;
 								dataAvailableToWrite <= dataAvailableToWrite;
 
-								statusReg <= databus;
+								statusRegister <= databus;
 								internalData <= internalData;
 
 								nextState <= 2'b00;
@@ -126,7 +126,7 @@ module driver(
 								dataAvailableToRead <= dataAvailableToRead;
 								dataAvailableToWrite <= dataAvailableToWrite;
 
-								statusReg <= statusReg;
+								statusRegister <= statusRegister;
                         internalData <= divisor[7:0];
 
 								nextState <= 2'b11;
@@ -137,7 +137,7 @@ module driver(
 								dataAvailableToRead <= dataAvailableToRead;
 								dataAvailableToWrite <= dataAvailableToWrite;
 
-								statusReg <= statusReg;
+								statusRegister <= statusRegister;
                         internalData <= divisor[15:8];
 
 								nextState <= 2'b11;

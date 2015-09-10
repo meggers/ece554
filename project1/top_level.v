@@ -1,21 +1,21 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date:   
-// Design Name: 
-// Module Name:    top_level 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
+// Company:
+// Engineer:
 //
-// Dependencies: 
+// Create Date:
+// Design Name:
+// Module Name:    top_level
+// Project Name:
+// Target Devices:
+// Tool versions:
+// Description:
 //
-// Revision: 
+// Dependencies:
+//
+// Revision:
 // Revision 0.01 - File Created
-// Additional Comments: 
+// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 module top_level(
@@ -25,14 +25,14 @@ module top_level(
     input rxd,         // RS232 Recieve Data
     input [1:0] br_cfg // Baud Rate Configuration, Tied to dip switches 2 and 3
     );
-	
+
 	wire iocs;
 	wire iorw;
 	wire rda;
 	wire tbr;
 	wire [1:0] ioaddr;
 	wire [7:0] databus;
-	
+
 	// Instantiate your SPART here
 	spart spart0( .clk(clk),
                  .rst(rst),
@@ -43,7 +43,7 @@ module top_level(
 					  .ioaddr(ioaddr),
 					  .databus(databus),
 					  .txd(txd),
-					  .rxd(rxd),
+					  .rxd(rxd)
 					);
 
 	// Instantiate your driver here
@@ -57,5 +57,5 @@ module top_level(
 						 .ioaddr(ioaddr),
 						 .databus(databus)
 					 );
-					 
+
 endmodule

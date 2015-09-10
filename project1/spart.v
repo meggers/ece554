@@ -54,7 +54,7 @@ module spart(
 
         .databus(databus),
 
-        .data(data),
+        .data(data)
     );
 
     transmit tx0(
@@ -71,7 +71,7 @@ module spart(
     );
 
     receive rx0(
-        .in(data),
+        .in(rxd),
         .clk(clk),
         .rst(rst),
         .iocs(iocs),

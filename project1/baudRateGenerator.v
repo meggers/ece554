@@ -9,20 +9,10 @@ module baudRateGenerator(
     );
 
 	reg enable;
+	reg [15:0] divisor;
 
-	wire [15:0] divisor;
 	wire loadCounter;
 	wire [15:0] count;
-
-	baudRateDivisorBuffer db0(
-		// in
-		.clk(clk),
-		.rst(rst),
-		.ioaddr(ioaddr),
-		.data(data),
-		// out
-		.divisor(divisor)
-	);
 
 	baudRateDownCounter dc0(
 		// in
@@ -42,19 +32,17 @@ module baudRateGenerator(
 		.zero(loadCounter)
 	);
 
-
-
 	always @(posedge clk) begin
 		if(rst) begin
 			enable = 0;
 		end else begin
-	
+
 			case (ioaddr)
 				2'b00: begin // transmit buffer
 					enable = loadCounter;
 				end
 				2'b01: begin // status register
-				
+
 				end
 				2'b10: begin // low divisor
 					divisor[7:0] <= data;
@@ -73,33 +61,6 @@ module baudRateGenerator(
 	assign txenable = enable;
 
 endmodule
-
-
-module baudRateDivisorBuffer(
-	input clk,
-	input rst,
-	input [1:0] ioaddr,
-	input [7:0] data,
-
-	output reg [15:0] divisor
-	);
-
-	always @(posedge clk) begin
-		if(rst) begin
-			divisor <= 0;
-		end else begin
-			if(ioaddr == 2'b10)
-				divisor[7:0] <= data;
-			else if(ioaddr == 2'b11)
-				divisor[15:8] <= data;
-		end
-
-	end
-
-
-endmodule
-
-
 
 module baudRateDownCounter(
 	input clk,
