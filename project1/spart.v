@@ -32,7 +32,7 @@ module spart(
     );
 
     wire [7:0] data, rxBuffer;
-    wire rxenable, txenable, rda, tbr;
+    wire rxenable, txenable;
 
     baudRateGenerator brg0(
         .clk(clk),
