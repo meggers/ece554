@@ -48,18 +48,18 @@ module baudRateGenerator(
 		if(rst) begin
 			enable = 0;
 		else begin
-
+	
 			case (ioaddr)
-				2b'00: begin // transmit buffer
+				2'b00: begin // transmit buffer
 					enable = loadCounter;
 				end
-				2b'01: begin // status register
-
+				2'b01: begin // status register
+				
 				end
-				2b'10: begin // low divisor
+				2'b10: begin // low divisor
 					divisor[7:0] <= data;
 				end
-				2b'11: begin // high divisor
+				2'b11: begin // high divisor
 					divisor[15:8] <= data;
 				end
 
@@ -88,9 +88,9 @@ module baudRateDivisorBuffer(
 		if(rst) begin
 			divisor <= 0;
 		else begin
-			if(ioaddr == 2b'10)
+			if(ioaddr == 2'b10)
 				divisor[7:0] <= data;
-			else if(ioaddr == 2b'11)
+			else if(ioaddr == 2'b11)
 				divisor[15:8] <= data;
 		end
 
