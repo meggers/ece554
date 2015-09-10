@@ -12,7 +12,7 @@ module busInterface(
     );
 
     reg [7:0] internalDataBus;
-    always @(ioaddr) begin
+    always @(*) begin
         if (iocs) begin
             case(ioaddr)
                 2'b00: begin
@@ -34,7 +34,7 @@ module busInterface(
                 2'b11: begin
                     internalDataBus = databus;
                 end
-				 endcase
+		    endcase
         end else begin
             internalDataBus = 8'bz;
         end

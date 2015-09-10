@@ -48,7 +48,8 @@ module driver(
                      br_cfg == 2'b01 ? divisor1 :
                      br_cfg == 2'b10 ? divisor2 : divisor3;
 
-	 assign databus = ~iorw ? internalData : 8'bz;
+	assign databus = ~iorw ? internalData : 8'bz;
+
     always @(posedge clk) begin
         if (rst)
             begin
@@ -56,91 +57,91 @@ module driver(
                 currentState <= 2'b10;
                 nextState <= 2'b11;
 
-				 	 dataAvailableToRead <= 1'b0;
-					 dataAvailableToWrite <= 1'b0;
+                dataAvailableToRead <= 1'b0;
+                dataAvailableToWrite <= 1'b0;
 
-					 internalData <= 8'b0;
-					 statusRegister <= 8'b0;
+                internalData <= 8'b0;
+                statusRegister <= 8'b0;
 
                 iocs <= 1'b0;
                 iorw <= 1'b0;
             end
         else
             begin
-					 iocs <= 1'b1;
+                iocs <= 1'b1;
                 ioaddr <= currentState;
                 case (currentState)
                     2'b00 : begin
 
-								// if data was read last cycle it is now available
-								if (dataAvailableToRead) begin
-									iorw <= 1'b1;
-									dataAvailableToRead <= 1'b0;
-									dataAvailableToWrite <= 1'b1;
+						// if data was read last cycle it is now available
+						if (dataAvailableToRead) begin
+							iorw <= 1'b1;
+							dataAvailableToRead <= 1'b0;
+							dataAvailableToWrite <= 1'b1;
 
-									internalData <= databus;
+							internalData <= databus;
 
-								// if read data is available
-								end else if (rda) begin
-									iorw <= iorw;
-									dataAvailableToRead <= 1'b1;
-									dataAvailableToWrite <= dataAvailableToWrite;
+						// if read data is available
+						end else if (rda) begin
+							iorw <= iorw;
+							dataAvailableToRead <= 1'b1;
+							dataAvailableToWrite <= dataAvailableToWrite;
 
-									internalData <= internalData;
+							internalData <= internalData;
 
-								// if write data is available
-								end else if (tbr & dataAvailableToWrite) begin
-									iorw <= 1'b0;
-									dataAvailableToRead <= dataAvailableToRead;
-									dataAvailableToWrite <= 1'b0;
+						// if write data is available
+						end else if (tbr & dataAvailableToWrite) begin
+							iorw <= 1'b0;
+							dataAvailableToRead <= dataAvailableToRead;
+							dataAvailableToWrite <= 1'b0;
 
-									internalData <= internalData;
+							internalData <= internalData;
 
-								// idle? idk
-								end else begin
-									iorw <= iorw;
-									dataAvailableToRead <= dataAvailableToRead;
-									dataAvailableToWrite <= dataAvailableToWrite;
+						// idle? idk
+						end else begin
+							iorw <= iorw;
+							dataAvailableToRead <= dataAvailableToRead;
+							dataAvailableToWrite <= dataAvailableToWrite;
 
-									internalData <= internalData;
-								end
+							internalData <= internalData;
+						end
 
-								statusRegister <= statusRegister;
+						statusRegister <= statusRegister;
 
-								nextState <= 2'b00;
+						nextState <= 2'b00;
                     end
 
                     2'b01 : begin
                         iorw <= 1'b1;
-								dataAvailableToRead <= dataAvailableToRead;
-								dataAvailableToWrite <= dataAvailableToWrite;
+						dataAvailableToRead <= dataAvailableToRead;
+						dataAvailableToWrite <= dataAvailableToWrite;
 
-								statusRegister <= databus;
-								internalData <= internalData;
+						statusRegister <= databus;
+						internalData <= internalData;
 
-								nextState <= 2'b00;
+						nextState <= 2'b00;
                     end
 
                     2'b10 : begin
                         iorw = 1'b0;
-								dataAvailableToRead <= dataAvailableToRead;
-								dataAvailableToWrite <= dataAvailableToWrite;
+						dataAvailableToRead <= dataAvailableToRead;
+						dataAvailableToWrite <= dataAvailableToWrite;
 
-								statusRegister <= statusRegister;
+						statusRegister <= statusRegister;
                         internalData <= divisor[7:0];
 
-								nextState <= 2'b11;
+						nextState <= 2'b11;
                     end
 
                     2'b11 : begin
                         iorw = 1'b0;
-								dataAvailableToRead <= dataAvailableToRead;
-								dataAvailableToWrite <= dataAvailableToWrite;
+						dataAvailableToRead <= dataAvailableToRead;
+						dataAvailableToWrite <= dataAvailableToWrite;
 
-								statusRegister <= statusRegister;
+						statusRegister <= statusRegister;
                         internalData <= divisor[15:8];
 
-								nextState <= 2'b00;
+						nextState <= 2'b00;
                     end
                 endcase
 
