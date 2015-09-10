@@ -25,11 +25,11 @@ module driver(
     input rda,
     input tbr,
 
-    inout [7:0] databus
+    inout [7:0] databus,
 
     output iocs,
     output iorw,
-    output [1:0] ioaddr,
+    output [1:0] ioaddr
     );
 
     localparam divisor0 = 16'd1301;

@@ -34,7 +34,7 @@ module transmit(
 
                 // shift out data
                 out <= shiftReg[0];
-                shiftReg <= {1'b1, shiftReg[7, 1]};
+                shiftReg <= {1'b1, shiftReg[7:1]};
 
                 // if all data shifted out, signal ready
                 if (&shiftReg) begin
@@ -86,7 +86,7 @@ module receive(
         // read operation is occuring
         end else if (iorw) begin
             rda <= 1'b0;
-            shiftReg <= 10'b1-;
+            shiftReg <= 10'b1;
             data <= data;
 
         // read baud

@@ -18,8 +18,8 @@ module baudRateGenerator(
 		// in
 		.clk(clk),
 		.rst(rst),
-		.ioaddr(ioaddr)
-		.data(data)
+		.ioaddr(ioaddr),
+		.data(data),
 		// out
 		.divisor(divisor)
 	);
@@ -47,7 +47,7 @@ module baudRateGenerator(
 	always @(posedge clk) begin
 		if(rst) begin
 			enable = 0;
-		else begin
+		end else begin
 	
 			case (ioaddr)
 				2'b00: begin // transmit buffer
@@ -87,7 +87,7 @@ module baudRateDivisorBuffer(
 	always @(posedge clk) begin
 		if(rst) begin
 			divisor <= 0;
-		else begin
+		end else begin
 			if(ioaddr == 2'b10)
 				divisor[7:0] <= data;
 			else if(ioaddr == 2'b11)
@@ -117,7 +117,6 @@ module baudRateDownCounter(
 			tmpCount = 0;
 		else
 			tmpCount = load ? divisor : tmpCount - 1;
-		end
 	end
 
 	assign count = tmpCount;

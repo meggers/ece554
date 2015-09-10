@@ -34,6 +34,7 @@ module busInterface(
                 2'b11: begin
                     internalDataBus = databus;
                 end
+				 endcase
         end else begin
             internalDataBus = 8'bz;
         end
