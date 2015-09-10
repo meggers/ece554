@@ -86,14 +86,14 @@ module receive(
         // read operation is occuring
         end else if (iorw) begin
             rda <= 1'b0;
-            shiftReg <= 10'b1;
+            shiftReg <= 10'b1-;
             data <= data;
 
         // read baud
         end else if (enable) begin
 
             // we have received a full byte
-            if (~shiftReg[0] & shiftReg[9]) begin
+            if (shiftReg[9] & ~shiftReg[0]) begin
                 data <= shiftReg;
                 shiftReg <= 10'b1;
                 rda <= 1'b1;

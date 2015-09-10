@@ -7,13 +7,13 @@ module baudRateGenerator(
     output rxenable,
     output txenable
     );
-	
+
 	reg enable;
-	
+
 	wire [15:0] divisor;
 	wire loadCounter;
 	wire [15:0] count;
-	
+
 	baudRateDivisorBuffer db0(
 		// in
 		.clk(clk),
@@ -23,7 +23,7 @@ module baudRateGenerator(
 		// out
 		.divisor(divisor)
 	);
-	
+
 	baudRateDownCounter dc0(
 		// in
 		.clk(clk),
@@ -33,28 +33,28 @@ module baudRateGenerator(
 		// out
 		.count(count)
 	);
-	
-	
+
+
 	baudRateDecoder dec0(
 		//in
 		.count(count),
 		// out
 		.zero(loadCounter)
 	);
-	
-	
-	
+
+
+
 	always @(posedge clk) begin
 		if(rst) begin
 			enable = 0;
 		else begin
-	
+
 			case (ioaddr)
 				2b'00: begin // transmit buffer
 					enable = loadCounter;
 				end
 				2b'01: begin // status register
-				
+
 				end
 				2b'10: begin // low divisor
 					divisor[7:0] <= data;
@@ -62,13 +62,13 @@ module baudRateGenerator(
 				2b'11: begin // high divisor
 					divisor[15:8] <= data;
 				end
-			
+
 			endcase
-			
+
 		end
-	
+
 	end
-	
+
 	assign rxenable = enable;
 	assign txenable = enable;
 
@@ -80,10 +80,10 @@ module baudRateDivisorBuffer(
 	input rst,
 	input [1:0] ioaddr,
 	input [7:0] data,
-	
+
 	output reg [15:0] divisor
 	);
-	
+
 	always @(posedge clk) begin
 		if(rst) begin
 			divisor <= 0;
@@ -93,10 +93,10 @@ module baudRateDivisorBuffer(
 			else if(ioaddr == 2b'11)
 				divisor[15:8] <= data;
 		end
-	
+
 	end
-	
-	
+
+
 endmodule
 
 
@@ -106,12 +106,12 @@ module baudRateDownCounter(
 	input rst,
 	input [15:0] divisor,
 	input load,
-	
+
 	output [15:0] count
 	);
-	
+
 	reg [15:0] tmpCount;
-	
+
 	always @(posedge clk) begin
 		if(rst)
 			tmpCount = 0;
@@ -119,20 +119,20 @@ module baudRateDownCounter(
 			tmpCount = load ? divisor : tmpCount - 1;
 		end
 	end
-	
+
 	assign count = tmpCount;
-	
+
 endmodule
 
 
 module baudRateDecoder(
 	input [15:0] count,
-	
+
 	output zero
 	);
-	
+
 	assign zero = count == 0;
-	
+
 endmodule
 
 
