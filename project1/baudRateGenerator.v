@@ -24,7 +24,6 @@ module baudRateGenerator(
 		.count(count)
 	);
 
-
 	baudRateDecoder dec0(
 		//in
 		.count(count),
