@@ -79,7 +79,7 @@ module receive(
 
         // reset
         if (rst) begin
-            shiftReg <= 10'b1;
+            shiftReg <= 10'hFFF;
             data <= 8'b0;
             rda <= 1'b0;
 
@@ -94,6 +94,7 @@ module receive(
 
             // we have received a full byte
             if (shiftReg[9] & ~shiftReg[0]) begin
+                $display("why");
                 data <= shiftReg;
                 shiftReg <= 10'b1;
                 rda <= 1'b1;
