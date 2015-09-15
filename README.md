@@ -1,1 +1,1 @@
-# ece554project1
+# ECE 554 Projects
