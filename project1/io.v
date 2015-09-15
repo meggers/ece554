@@ -19,7 +19,7 @@ module transmit(
         if (rst) begin
             tbr <= 1'b1;
             out <= 1'b1;
-            shiftReg <= 10'b1;
+            shiftReg <= 10'h3FF;
 
         // write baud
         end else if (enable) begin
@@ -79,14 +79,14 @@ module receive(
 
         // reset
         if (rst) begin
-            shiftReg <= 10'b1;
+            shiftReg <= 10'h3FF;
             data <= 8'b0;
             rda <= 1'b0;
 
         // read operation is occuring
         end else if (iorw) begin
             rda <= 1'b0;
-            shiftReg <= 10'b1;
+            shiftReg <= 10'h3FF;
             data <= data;
 
         // read baud
@@ -95,7 +95,7 @@ module receive(
             // we have received a full byte
             if (shiftReg[9] & ~shiftReg[0]) begin
                 data <= shiftReg;
-                shiftReg <= 10'b1;
+                shiftReg <= 10'h3FF;
                 rda <= 1'b1;
 
             // we are still reading
