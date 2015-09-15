@@ -1,2 +1,5 @@
-SPART
-test.vcd
+*
+
+!.gitignore
+!*.v
+!*.ucf
