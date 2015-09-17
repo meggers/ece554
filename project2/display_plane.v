@@ -28,7 +28,7 @@
 `define PLAY_LEFT 10'd8
 `define PLAY_RIGHT 10'd631
 
-module draw_logic(clk, rst, pixel_x, pixel_y, pixel_r, pixel_g, pixel_b,multiplier, multiplicand, product);
+module display_plane(clk, rst, pixel_x, pixel_y, pixel_r, pixel_g, pixel_b,multiplier, multiplicand, product);
     input clk;
     input rst;
     input [9:0] pixel_x;
