@@ -38,7 +38,7 @@ module main_logic(clk, rst, up, down, left, right, pixel_x, pixel_y, pixel_r, pi
 	 wire [31:0] multiplicand;
 	 wire [31:0] product;
 	 
-	 draw_logic draw1(clk, rst, pixel_x, pixel_y,  
+	 display_plane draw1(clk, rst, pixel_x, pixel_y,  
 	                  pixel_r, pixel_g, pixel_b,multiplier, multiplicand, product);
      
 	 tick_logic tl1(clk, rst, tick_cycle,
