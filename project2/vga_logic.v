@@ -18,9 +18,10 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module vga_logic(clk, rst, blank, comp_sync, hsync, vsync, pixel_x, pixel_y);
+module vga_logic(clk, rst, enable, blank, comp_sync, hsync, vsync, pixel_x, pixel_y);
     input clk;
     input rst;
+	 input enable;
 	 output blank;
 	 output comp_sync;
     output hsync;
