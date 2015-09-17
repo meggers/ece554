@@ -28,18 +28,20 @@
 `define PLAY_LEFT 10'd8
 `define PLAY_RIGHT 10'd631
 
-module display_plane(clk, rst, pixel_x, pixel_y, pixel_r, pixel_g, pixel_b,multiplier, multiplicand, product);
-    input clk;
-    input rst;
-    input [9:0] pixel_x;
-    input [9:0] pixel_y;
-	 input [31:0] multiplier;
-    input [31:0] multiplicand;
-	 input [31:0] product;
-	 
-    output reg [7:0] pixel_r;
-    output reg [7:0] pixel_g;
-    output reg [7:0] pixel_b;
+module display_plane(
+	input clk,
+	input rst,
+	input [9:0] pixel_x,
+	input [9:0] pixel_y,
+	
+	output reg [7:0] pixel_r,
+	output reg [7:0] pixel_g,
+	output reg [7:0] pixel_b,
+	
+	input [31:0] multiplier,
+	input [31:0] multiplicand,
+	input [31:0] product
+	);
 	 
 	 reg [3:0] cur_prod_digit;
 	 reg [3:0] cur_multiplier_digit;
