@@ -33,7 +33,7 @@ module display_plane(
 	wire [11:0] rom_addr;
 	wire [23:0] rom_color;
 	 
-	assign rom_addr = {3'b000, pixel_y[6:0]} * 80 + {3'b000, pixel_x[6:0]};
+	assign rom_addr = {3'b000, pixel_y[9:3]} * 80 + {3'b000, pixel_x[9:3]};
 	 
     rom rom1(clk, rom_addr, rom_color);
 
@@ -42,15 +42,15 @@ module display_plane(
 		pixel_g = 8'h00;
 		pixel_b = 8'h00;
 		if(~rst) begin
-			//if (pixel_x > 10'd79 || pixel_y > 10'd59) begin
-			//	pixel_r = 8'b0;
-			//	pixel_g = 8'b0;
-			//	pixel_b = 8'b0;
-			//end else begin
+			if (pixel_x > 10'd659 || pixel_y > 10'd539) begin
+				pixel_r = 8'b0;
+				pixel_g = 8'b0;
+				pixel_b = 8'b0;
+			end else begin
 				pixel_r = rom_color[23:16];
 				pixel_g = rom_color[15:8];
 				pixel_b = rom_color[7:0];
-			//end
+			end
 		end
 	 end
 	 
