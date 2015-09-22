@@ -42,11 +42,7 @@ module vgamult(clk_100mhz,  rst, pixel_r, pixel_g, pixel_b, hsync, vsync, blank,
 	 wire [9:0] pixel_y;
 	 wire [23:0] pixel_gbrg;
 	 
-	 wire [7:0] fifo_in_r;
-	 wire [7:0] fifo_in_g;
-	 wire [7:0] fifo_in_b;
-	 
-	 assign pixel_gbrg = {fifo_in_g[3:0], fifo_in_b, fifo_in_r, fifo_in_g[7:4]};
+	 assign pixel_gbrg = {pixel_g[3:0], pixel_b, pixel_r, pixel_g[7:4]};
 	 
 	 wire clkin_ibufg_out;
 	 wire clk_100mhz_buf;
@@ -75,25 +71,15 @@ module vgamult(clk_100mhz,  rst, pixel_r, pixel_g, pixel_b, hsync, vsync, blank,
 	 assign sda_tri = (sda)? 1'bz: 1'b0;
 	 assign scl_tri = (scl)? 1'bz: 1'b0;
 	 
-	 dvi_ifc dvi1(.Clk(clk_25mhz),                     // Clock input
-						.Reset_n(dvi_rst),                  // Reset input
-						.SDA(sda),                          // I2C data
-						.SCL(scl),                          // I2C clock
-						.Done(done),                        // I2C configuration done
-						.IIC_xfer_done(iic_tx_done),        // IIC configuration done
-						.init_IIC_xfer(1'b0)                // IIC configuration request
-						);
-	
-	 xclk_fifo xclk_fifo1(
-		.wr_clk(clk_100mhz_buf), 
-		.rd_clk(clk_25mhz), 
-		.din(pixel_gbrg), 
-		.rst(rst),
-		.full(vga_enable_n),
-		.dout({pixel_g[3:0], pixel_b, pixel_r, pixel_g[7:4]}),
-		.wr_en(vga_enable),
-		.rd_en(1'b1)
-	 );
+	 dvi_ifc dvi1(
+		.Clk(clk_25mhz),                     // Clock input
+		.Reset_n(dvi_rst),                  // Reset input
+		.SDA(sda),                          // I2C data
+		.SCL(scl),                          // I2C clock
+		.Done(done),                        // I2C configuration done
+		.IIC_xfer_done(iic_tx_done),        // IIC configuration done
+		.init_IIC_xfer(1'b0)                // IIC configuration request
+		);
 	 
 	 vga_clk vga_clk_gen1(
 		clk_100mhz, 
@@ -105,25 +91,27 @@ module vgamult(clk_100mhz,  rst, pixel_r, pixel_g, pixel_b, hsync, vsync, blank,
 	);
 	 
     vga_logic  vgal1(
-		 clk_25mhz, 
-		 rst|~locked_dcm, 
-		 vga_enable,
-		 blank, 
-		 comp_sync, 
-		 hsync, 
-		 vsync, 
-		 pixel_x, 
-		 pixel_y
-	 );
-	 
-	 main_logic main1(
+		clk_100mhz_buf,
 		clk_25mhz, 
 		rst|~locked_dcm, 
+		vga_enable,
+		blank, 
+		comp_sync, 
+		hsync, 
+		vsync, 
 		pixel_x, 
-		pixel_y, 
-		fifo_in_r, 
-		fifo_in_g, 
-		fifo_in_b
+		pixel_y
+	);
+	 
+	main_logic main1(
+		clk_100mhz_buf,
+		clk_25mhz,
+		rst|~locked_dcm,
+		pixel_x,
+		pixel_y,
+		pixel_r,
+		pixel_g,
+		pixel_b
 	);
 	 
 endmodule
